@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Media{% endblock %}
+
+{% block content %}
+
+<div class="container fix">
+
+	<div class="row fix2">
+		<div class="col-lg-12">
+			<h2 class="page-header text-center">SHOWS</h2>
+		</div>
+		
+		{% if root_media is defined %}
+			{% for folder in root_media %}
+				<div class="col-lg-2 text-center">
+					{% do json_data.update({'FILE': folder.name}) %}
+					<button class="press" id="True" data-path='{{json_data|tojson}}' >
+						<img src="{{url_for('static', filename='other/folder.png') }}" alt=""/>
+					</button>
+					<h3 id="title">{{folder.name}}</h3>
+				</div>
+			{% endfor %}
+		{% else %}
+			{% for file in media %}
+				<div class="col-lg-2 text-center">
+						{% do json_data.update({'FILE': file.filename}) %}
+						<button class="press" id="{{file.isDirectory}}" data-path='{{json_data|tojson}}' >
+						{% if file.isDirectory %}
+							<img src="{{url_for('static', filename='other/folder.png') }}" alt=""/>
+						{% else %}
+							{% if file.filename.endswith((".mkv",".mp4","wmv","avi","flv")) %}
+								<img src="{{url_for('static', filename='other/player2.png') }}" alt=""/>
+							{% elif file.filename.endswith((".jpg",".jpe","jpeg","png","gif","svg","bmp")) %}
+								<img src="{{url_for('static', filename='other/image.png') }}" alt=""/>
+							{% elif file.filename.endswith((".gz",".bz2","zip","tar","tgz","txz","7z")) %}
+								<img src="{{url_for('static', filename='other/archives.png') }}" alt=""/>
+							{% elif file.filename.endswith((".wav",".mp3",".aac",".ogg",".oga",".flac")) %}
+								<img src="{{url_for('static', filename='other/audio.png') }}" alt=""/>
+							{% elif file.filename.endswith(".txt") %}
+								<img src="{{url_for('static', filename='other/text.png') }}" alt=""/>
+							{% else %}
+								<img src="{{url_for('static', filename='other/default.png') }}" alt=""/>
+							{% endif %}
+						{% endif %}
+						</button>
+					<h3 id="title">{{file.filename}}</h3>
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</div>
+{{super()}}
+{% endblock %}
+
+{% block scripts %}
+{{super()}}
+<script>
+	var csrf_token = "{{ csrf_token() }}";
+</script>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/search-0.2.js') }}"></script>
+{% endblock %}
+

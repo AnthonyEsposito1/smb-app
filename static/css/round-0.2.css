@@ -1,0 +1,59 @@
+/*!
+ * Start Bootstrap - Round About (http://startbootstrap.com/)
+ * Copyright 2013-2016 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap/blob/gh-pages/LICENSE)
+ */
+
+.press {
+    background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0! important;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit !important;
+}
+
+body {
+    padding: 70px;
+}
+
+.img-center {
+	margin: 0 auto;
+}
+.fix {
+  width: 90%;
+}
+#title {
+font-size: 17.5px;
+word-wrap: break-word;
+}
+img{
+width: 250px;
+height: 250px;
+}
+.container > .row > .col-lg-2:nth-child(6n+2) {
+    clear: both;
+}
+
+#networkButton{
+	margin: 10px 0px;
+	}
+
+@media (max-width: 992px) {
+  .fix {
+      width: 105%;
+  }
+  .fix2 {
+    margin: -11%; 
+  }
+}
+@media (max-width: 390px) {
+  body {
+      padding: 20% 8% 0% 5%;
+  }
+
+
+footer {
+    margin: 50px 0;
+}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Find a network{% endblock %}
+
+{% block content %}
+
+<h1>SELECT</h1>
+<div class="message" role="alert"></div>
+<div class="loading" role="alert"></div>
+<button id='networkButton' type="button" class="btn btn-default" onclick="loadNetworks()" >Search</button>
+
+<form action="" method="post" class="form" role="form">
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+	<div class="form-group"><label class="control-label" for="name_ip">Select Computer</label>
+		<select class="form-control" id="name_ip" name="name_ip"></select>
+	</div>
+	<input class="btn btn-default" id="submit" name="submit" type="submit" value="Sumbit">
+</form>
+
+{{super()}}
+{% endblock  %}
+
+{% block scripts %}
+{{ super() }}
+<script type="text/javascript" src="{{ url_for('static', filename='js/add-networks.js') }}"></script>
+{% endblock %}
