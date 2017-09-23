@@ -53,7 +53,6 @@ class InputNetworkForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-
 @app.route('/add_network', methods=['GET', 'POST'])
 def add_network():
     networks = find_ip_name()
