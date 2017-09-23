@@ -1,6 +1,5 @@
 $('.press').click(function ()
 	{   
-		
 		var data = $(this).data('path');
 		var ip = data['IP']
 		var senddata = JSON.stringify(data)
