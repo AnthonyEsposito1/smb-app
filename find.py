@@ -16,14 +16,12 @@ def get_default_gateway_linux():
 
 
 def find_ip_name():
-    # network = '192.168.0.1'
     network = get_default_gateway_linux()
     network = network.rsplit('.', 1)
     network = str(network[0]) + '.'
     ip_name = {}
     for ip in range(1, 256):
         addr = network + str(ip)
-	#print(addr)
         s = socket(AF_INET, SOCK_STREAM)
         s.settimeout(0.01)
         if not s.connect_ex((addr, 139)):
