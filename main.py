@@ -1,5 +1,3 @@
-# qpy:kivy
-
 # flask
 from flask import Flask, render_template, request, url_for, redirect, jsonify
 from flask_wtf.csrf import CSRFProtect
@@ -9,13 +7,11 @@ from flask_jsglue import JSGlue
 # WTForms
 from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import Optional, IPAddress
-
 # SMB
 from smb.SMBConnection import SMBConnection
-
+# local import
 from find import find_ip_name
-# Java
-# from jnius import cast, autoclass
+# standard library
 from ast import literal_eval
 
 
@@ -24,13 +20,14 @@ app = Flask(__name__)
 Bootstrap(app)
 jsglue = JSGlue(app)
 csrf = CSRFProtect(app)
+app.config['SECRET_KEY'] = 'xxxxxyyyyyzzzzz'
+app.jinja_env.add_extension('jinja2.ext.do')
 
 # debug settings
-app.config['SECRET_KEY'] = 'xxxxxyyyyyzzzzz'
 app.jinja_env.auto_reload = True
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.config['DEBUG'] = True
-app.jinja_env.add_extension('jinja2.ext.do')
+
 
 @app.route('/')
 def index():
@@ -48,6 +45,7 @@ def shutdown_server():
 def shutdown():
     shutdown_server()
     return 'Server shutting down...'
+
 
 class InputNetworkForm(FlaskForm):
     name = StringField('Computer Name')
@@ -70,8 +68,7 @@ def input_network():
     if form.validate_on_submit():
         name = form.name.data
         ip = form.ip.data
-        return redirect(url_for('smb_search', path=name, ip=ip))
-    
+        return redirect(url_for('smb_search', path=name, ip=ip))    
     return render_template('input-network.html', form=form)
 
 @app.route('/find-network', methods=['GET', 'POST'])
@@ -79,8 +76,7 @@ def find_network():
     if request.method == 'POST':
         name_ip = literal_eval(request.form['name_ip'])
         ip, name = name_ip['ip'], name_ip['network']
-        return redirect(url_for('smb_search', path=name, ip=ip))
-    
+        return redirect(url_for('smb_search', path=name, ip=ip))    
     return render_template('find-network.html')
 
 
@@ -102,7 +98,6 @@ def smb_search(ip, path):
         return render_template('media.html', root_media=root_media, json_data=json_data)
 
     elif len(split_path) <= 2:
-
         shares = conn.listPath(split_path[1:][0], '')
         for share in shares:
             if share.filename not in ['.', '..']:
